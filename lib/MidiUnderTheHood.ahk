@@ -59,7 +59,7 @@ ReadIni() ; also set up the tray Menu
 			}
 		Else ; no ini exists and this is either the first run or reset settings.
 			{
-				MsgBox, 1, No ini file found, Select midi ports?
+				MsgBox, % "Make config", % "No .ini file found. Select midi ports?"
 				IfMsgBox, Cancel
 					ExitApp
 				IfMsgBox, yes
