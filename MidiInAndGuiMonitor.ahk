@@ -2,7 +2,7 @@
   PARSE - LAST MIDI MESSAGE RECEIVED - 
   Midi monitor.
 */
-
+	
 ;*************************************************
 ;*			MIDI INPUT PARSE FUNCTION
 ;*		
@@ -12,15 +12,15 @@
 
 MidiMsgDetect(hInput, midiMsg, wMsg) ; Midi input section in "under the hood" calls this function each time a midi message is received. Then the midi message is broken up into parts for manipulation.  See http://www.midi.org/techspecs/midimessages.php (decimal values).
   {
-    global statusbyte, chan, note, cc, byte1, byte2, pitchb, stb
-    
-    statusbyte 	:=  midiMsg & 0xFF			; EXTRACT THE STATUS BYTE (WHAT KIND OF MIDI MESSAGE IS IT?)
-    chan 		:= (statusbyte & 0x0f) + 1	; WHAT MIDI CHANNEL IS THE MESSAGE ON?
-    byte1 		:= (midiMsg >> 8) & 0xFF	; THIS IS DATA1 VALUE = NOTE NUMBER OR CC NUMBER
-    byte2 		:= (midiMsg >> 16) & 0xFF	; DATA2 VALUE IS NOTE VELEOCITY OR CC VALUE
-    pitchb		:= (byte2 << 7) | byte1   	;(midiMsg >> 8) & 0x7F7F  masking to extract the pbs  
-    
-     	
+	 global statusbyte, chan, note, cc, byte1, byte2, pitchb, stb
+	 
+	 statusbyte 	:=  midiMsg & 0xFF			; EXTRACT THE STATUS BYTE (WHAT KIND OF MIDI MESSAGE IS IT?)
+	 chan 		:= (statusbyte & 0x0f) + 1	; WHAT MIDI CHANNEL IS THE MESSAGE ON?
+	 byte1 		:= (midiMsg >> 8) & 0xFF	; THIS IS DATA1 VALUE = NOTE NUMBER OR CC NUMBER
+	 byte2 		:= (midiMsg >> 16) & 0xFF	; DATA2 VALUE IS NOTE VELEOCITY OR CC VALUE
+	 pitchb		:= (byte2 << 7) | byte1   	;(midiMsg >> 8) & 0x7F7F  masking to extract the pbs  
+	 
+	  	
 	if statusbyte between 176 and 191 	; test for cc
 		stb := "CC" 					; if so then set stp to cc
 	if statusbyte between 144 and 159 
@@ -31,7 +31,7 @@ MidiMsgDetect(hInput, midiMsg, wMsg) ; Midi input section in "under the hood" ca
 		stb := "PitchB"
 	gosub, ShowMidiInMessage ; show updated midi input message on midi monitor gui.
 	gosub, MidiRules ; run the label in file MidiRules.ahk Edit that file.
-    
+	 
   } 
 ; end of MidiMsgDetect funciton
 
@@ -105,15 +105,15 @@ Return
 ; MIDI Rules dispatcher
 
 MidiRules:
-    if (statusbyte >= 128 and statusbyte <= 159) { ; Note off/on
-        isNoteOn := (statusbyte >= 144 and byte2 > 0)
-        ProcessNote(0, chan, byte1, byte2, isNoteOn)
-    } else if (statusbyte >= 176 and statusbyte <= 191) { ; CC
-        ProcessCC(0, chan, byte1, byte2)
-    } else if (statusbyte >= 192 and statusbyte <= 208) { ; PC
-        ProcessPC(0, chan, byte1, byte2)
-    } else if (statusbyte >= 224 and statusbyte <= 239) { ; Pitch bend
-        ProcessPitchBend(0, chan, pitchb)
-    }
-    ; Maybe TODO: Key aftertouch, channel aftertouch,
+	 if (statusbyte >= 128 and statusbyte <= 159) { ; Note off/on
+		  isNoteOn := (statusbyte >= 144 and byte2 > 0)
+		  ProcessNote(0, chan, byte1, byte2, isNoteOn)
+	 } else if (statusbyte >= 176 and statusbyte <= 191) { ; CC
+		  ProcessCC(0, chan, byte1, byte2)
+	 } else if (statusbyte >= 192 and statusbyte <= 208) { ; PC
+		  ProcessPC(0, chan, byte1, byte2)
+	 } else if (statusbyte >= 224 and statusbyte <= 239) { ; Pitch bend
+		  ProcessPitchBend(0, chan, pitchb)
+	 }
+	 ; Maybe TODO: Key aftertouch, channel aftertouch,
 Return
