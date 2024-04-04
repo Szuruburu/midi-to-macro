@@ -64,9 +64,12 @@ ReadIni() ; also set up the tray Menu
 					ExitApp
 				IfMsgBox, yes
 					gosub, midiset
+					gosub, midiMon ; see below - a monitor gui - see Midi_In_and_GuiMonitor.ahk
 				;WriteIni()
 			}
 		Menu, Tray, Tip, % apptitle 
+		Menu, Tray, Add, ;-------------------------------
+		Menu, Tray, Add,% "Exit " apptitle,GuiClose
 	}
 ;*************************************************
 ;*          WRITE TO INI FILE FUNCTION 
@@ -211,7 +214,7 @@ Return
 GuiClose: ; on x exit app
 	Suspend, Permit ; allow Exit to work Paused. I just added this yesterday 3.16.09 Can now quit when Paused.
  
-	MsgBox, 4, Exit %apptitle%, Exit %apptitle% %ver%? ; 
+	MsgBox, 4, % "Exit "  apptitle, % "Exit " apptitle "?" ; 
 	IfMsgBox No
 			Return
 		
