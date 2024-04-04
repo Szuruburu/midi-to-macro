@@ -52,10 +52,10 @@ ReadIni() ; also set up the tray Menu
 		Menu, Tray, Add, ResetAll           ; Delete the ini file for testing --------------------------------
 		Menu, Tray, Add, MidiMon
 		Menu, Tray, Icon, icon.ico
-		global MidiInDevice, version ; version var is set at the beginning.
-		IfExist, %version%.ini
+		global MidiInDevice, apptitle ; apptitle  var is set at the beginning.
+		IfExist, % apptitle ".ini"
 			{
-				IniRead, MidiInDevice, %version%.ini, Settings, MidiInDevice , %MidiInDevice%     ; read the midi In port from ini file
+				IniRead, MidiInDevice, %apptitle%.ini, Settings, MidiInDevice , %MidiInDevice%     ; read the midi In port from ini file
 			}
 		Else ; no ini exists and this is either the first run or reset settings.
 			{
@@ -66,6 +66,7 @@ ReadIni() ; also set up the tray Menu
 					gosub, midiset
 				;WriteIni()
 			}
+		Menu, Tray, Tip, % apptitle 
 	}
 ;*************************************************
 ;*          WRITE TO INI FILE FUNCTION 
@@ -74,11 +75,11 @@ ReadIni() ; also set up the tray Menu
 ;CALLED TO UPDATE INI WHENEVER SAVED PARAMETERS CHANGE
 WriteIni()
 	{
-		global MidiInDevice, version
+		global MidiInDevice, apptitle 
 	 
-		IfNotExist, %version%.ini ; if no ini 
-			FileAppend,, %version%.ini ; make one with the following entries.
-		IniWrite, %MidiInDevice%, %version%.ini, Settings, MidiInDevice
+		IfNotExist, %apptitle%.ini ; if no ini 
+			FileAppend,, %apptitle%.ini ; make one with the following entries.
+		IniWrite, %MidiInDevice%, %apptitle%.ini, Settings, MidiInDevice
 	}
 
 ;*************************************************
@@ -151,7 +152,7 @@ MidiSet: ; midi port selection gui
 	;gui, 4: add, checkbox, x10 y+10 vNotShown gDontShow, Do Not Show at startup.
 	;IfEqual, NotShown, 1
 	;guicontrol, 4:, NotShown, 1
-	Gui, 4: show , , %version% Midi Port Selection ; main window title and command to show it.
+	Gui, 4: show , , %apptitle% Midi Port Selection ; main window title and command to show it.
 
 Return
 
@@ -198,10 +199,10 @@ Return
 ; ********************** Midi output detection
 
 ResetAll: ; for development only, leaving this in for a program reset if needed by user
-	MsgBox, 33, %version% - Reset All?, This will delete ALL settings`, and restart this program!
+	MsgBox, 33, %apptitle% - Reset All?, This will delete ALL settings`, and restart this program!
 	IfMsgBox, OK
 		{
-			FileDelete, %version%.ini   ; delete the ini file to reset ports, probably a better way to do this ...
+			FileDelete, %apptitle%.ini   ; delete the ini file to reset ports, probably a better way to do this ...
 			Reload                        ; restart the app.
 		}
 	IfMsgBox, Cancel
@@ -210,7 +211,7 @@ Return
 GuiClose: ; on x exit app
 	Suspend, Permit ; allow Exit to work Paused. I just added this yesterday 3.16.09 Can now quit when Paused.
  
-	MsgBox, 4, Exit %version%, Exit %version% %ver%? ; 
+	MsgBox, 4, Exit %apptitle%, Exit %apptitle% %ver%? ; 
 	IfMsgBox No
 			Return
 		

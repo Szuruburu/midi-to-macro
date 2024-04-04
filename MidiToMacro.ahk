@@ -27,13 +27,12 @@ if A_OSVersion in WIN_NT4,WIN_95,WIN_98,WIN_ME  ; if not xp or 2000 quit
 	MsgBox This script requires Windows 2000/XP or later.
 	ExitApp
 }
-
-version = MidiToMacro
-readini()                       ; load values from the ini file, via the readini function - see Midi_under_the_hood.ahk file
-gosub, MidiPortRefresh          ; used to refresh the input and output port lists - see Midi_under_the_hood.ahk file
-port_test(numports,numports2)   ; test the ports - check for valid ports? - see Midi_under_the_hood.ahk file
-gosub, midiin_go                ; opens the midi input port listening routine see Midi_under_the_hood.ahk file
-;gosub, midiMon                  ; see below - a monitor gui - see Midi_In_and_GuiMonitor.ahk
+apptitle = MidiToMacro
+readini()								; load values from the ini file, via the readini function - see Midi_under_the_hood.ahk file
+gosub, MidiPortRefresh				; used to refresh the input and output port lists - see Midi_under_the_hood.ahk file
+port_test(numports,numports2)		; test the ports - check for valid ports? - see Midi_under_the_hood.ahk file
+gosub, midiin_go						; opens the midi input port listening routine see Midi_under_the_hood.ahk file
+;gosub, midiMon						; see below - a monitor gui - see Midi_In_and_GuiMonitor.ahk
 return
 
 
