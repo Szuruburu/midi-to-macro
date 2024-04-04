@@ -84,7 +84,7 @@ return
 midiMon: ; midi monitor gui with listviews
 gui,14:destroy
 gui,14:default
-gui,14:add,text, x80 y5, Midi Input ; %TheChoice%
+gui,14:add,text, x80 y5, MIDI Input ; %TheChoice%
 Gui,14:Add, DropDownList, x40 y20 w140 Choose%TheChoice% vMidiInPort gOnMidiMonInputChange altsubmit, %MiList%  ; (
 Gui,14:Add, ListView, x5 r11 w220 Backgroundblack caqua Count10 vIn1,  EventType|StatB|Ch|Byte1|Byte2| 
 gui,14:Add, ListView, x+5 r11 w220 Backgroundblack cyellow Count10 vOut1,  Event|Value| 

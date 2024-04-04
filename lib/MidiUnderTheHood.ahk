@@ -48,9 +48,9 @@ return
 
 ReadIni() ; also set up the tray Menu
 	{
-		Menu, Tray, Add, % "Set MIDI ports", MidiSet            ; set midi ports tray item
-		Menu, Tray, Add, % "Reset settings", ResetAll           ; Delete the ini file for testing --------------------------------
-		Menu, Tray, Add, % "Open Midi monitor", MidiMon
+		Menu, Tray, Add, % "Set MIDI Ports", MidiSet            ; set midi ports tray item
+		Menu, Tray, Add, % "Reset Settings", ResetAll           ; Delete the ini file for testing --------------------------------
+		Menu, Tray, Add, % "Open MIDI Monitor", MidiMon
 		Menu, Tray, Icon, icon.ico
 		global MidiInDevice, apptitle ; apptitle  var is set at the beginning.
 		IfExist, % apptitle ".ini"
@@ -59,12 +59,12 @@ ReadIni() ; also set up the tray Menu
 			}
 		Else ; no ini exists and this is either the first run or reset settings.
 			{
-				MsgBox, 1, % "Make config", % "No .ini file found. Select midi ports?"
+				MsgBox, 1, % "Make config", % "No .ini file found. Select MIDI ports?"
 				IfMsgBox, Cancel
 					ExitApp
 				IfMsgBox, yes
 					gosub, midiset
-					gosub, midiMon ; see below - a monitor gui - see Midi_In_and_GuiMonitor.ahk
+					gosub, midiMon ; a monitor gui - see Midi_In_and_GuiMonitor.ahk
 				;WriteIni()
 			}
 		Menu, Tray, Tip, % apptitle 
@@ -103,10 +103,10 @@ port_test(numports,numports2) ; confirm selected ports exist ; CLEAN THIS UP STI
 				MidiIn := 0 ; this var is just to show if there is an error - set if the ports are valid = 1, invalid = 0
 						;MsgBox, 0, , midi in port Error ; (this is left only for testing)
 				If (MidiInDevice = "")              ; if there is no midi in device 
-						MidiInerr = Midi In Port EMPTY. ; set this var = error message
+						MidiInerr = MIDI IN port is empty ; set this var = error message
 						;MsgBox, 0, , midi in port EMPTY
 				If (midiInDevice > %numports%)          ; if greater than the number of ports on the system.
-						MidiInnerr = Midi In Port Invalid.  ; set this error message
+						MidiInnerr = MIDI IN port is invalid  ; set this error message
 						;MsgBox, 0, , midi in port out of range
 			}
 		Else
@@ -115,7 +115,7 @@ port_test(numports,numports2) ; confirm selected ports exist ; CLEAN THIS UP STI
 			}
 		If (%MidiIn% = 0)
 			{
-				MsgBox, 49, Midi Port Error!,%MidiInerr%`n`nLaunch Midi Port Selection!
+				MsgBox, 49, MIDI Port Error!,%MidiInerr%`nLaunching MIDI port selection...
 				IfMsgBox, Cancel
 					ExitApp
 				midiok = 0 ; Not sure if this is really needed now....
@@ -144,9 +144,9 @@ MidiSet: ; midi port selection gui
 	Gui, 4: Destroy
 	Gui, 4: +LastFound +AlwaysOnTop   +Caption +ToolWindow ;-SysMenu
 	Gui, 4: Font, s12
-	Gui, 4: add, text, x10 y10 w300 cmaroon, Select Midi Ports. ; Text title
+	Gui, 4: add, text, x10 y10 w300 cmaroon, Select MIDI ports. ; Text title
 	Gui, 4: Font, s8
-	Gui, 4: Add, Text, x10 y+10 w175 Center , Midi In Port  ;Just text label
+	Gui, 4: Add, Text, x10 y+10 w175 Center , MIDI IN port  ;Just text label
 	Gui, 4: font, s8
 	; midi ins list box
 	Gui, 4: Add, ListBox, x10 w200 h100  Choose%TheChoice% vMidiInPort gDoneInChange AltSubmit, %MiList% ; --- midi in listing of ports
@@ -157,7 +157,7 @@ MidiSet: ; midi port selection gui
 	;gui, 4: add, checkbox, x10 y+10 vNotShown gDontShow, Do Not Show at startup.
 	;IfEqual, NotShown, 1
 	;guicontrol, 4:, NotShown, 1
-	Gui, 4: show , , %apptitle% Midi Port Selection ; main window title and command to show it.
+	Gui, 4: show , , %apptitle% MIDI Port Selection ; main window title and command to show it.
 
 Return
 
@@ -204,11 +204,11 @@ Return
 ; ********************** Midi output detection
 
 ResetAll: ; for development only, leaving this in for a program reset if needed by user
-	MsgBox, 33, %apptitle% - Reset All?, This will delete ALL settings`, and restart this program!
+	MsgBox, 33, %apptitle%: Reset All?, This will delete ALL settings`, and restart this program!
 	IfMsgBox, OK
 		{
 			FileDelete, %apptitle%.ini   ; delete the ini file to reset ports, probably a better way to do this ...
-			Reload                        ; restart the app.
+			gosub, Restart ; restart the app.
 		}
 	IfMsgBox, Cancel
 Return
