@@ -48,9 +48,9 @@ return
 
 ReadIni() ; also set up the tray Menu
 	{
-		Menu, Tray, Add, MidiSet            ; set midi ports tray item
-		Menu, Tray, Add, ResetAll           ; Delete the ini file for testing --------------------------------
-		Menu, Tray, Add, MidiMon
+		Menu, Tray, Add, % "Set MIDI ports", MidiSet            ; set midi ports tray item
+		Menu, Tray, Add, % "Reset settings", ResetAll           ; Delete the ini file for testing --------------------------------
+		Menu, Tray, Add, % "Open Midi monitor", MidiMon
 		Menu, Tray, Icon, icon.ico
 		global MidiInDevice, apptitle ; apptitle  var is set at the beginning.
 		IfExist, % apptitle ".ini"
@@ -69,7 +69,9 @@ ReadIni() ; also set up the tray Menu
 			}
 		Menu, Tray, Tip, % apptitle 
 		Menu, Tray, Add, ;-------------------------------
-		Menu, Tray, Add,% "Exit " apptitle,GuiClose
+		Menu, Tray, Add,% "Reload " apptitle "`tShift+Alt+Esc", Restart
+		Menu, Tray, Add,% "Exit " apptitle, GuiClose
+		Menu, Tray, NoStandard
 	}
 ;*************************************************
 ;*          WRITE TO INI FILE FUNCTION 
