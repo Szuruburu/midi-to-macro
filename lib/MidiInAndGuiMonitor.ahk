@@ -81,7 +81,7 @@ return
 ;* 			MIDI MONITOR GUI CODE
 ;*************************************************
 
-midiMon: ; midi monitor gui with listviews
+MidiMon: ; midi monitor gui with listviews
 gui,14:destroy
 gui,14:default
 gui,14:add,text, x80 y5, MIDI Input ; %TheChoice%
@@ -90,7 +90,7 @@ Gui,14:Add, ListView, x5 r11 w220 Backgroundblack caqua Count10 vIn1,  EventType
 gui,14:Add, ListView, x+5 r11 w220 Backgroundblack cyellow Count10 vOut1,  Event|Value| 
 LV_ModifyCol(1, 105)
 LV_ModifyCol(2, 110)
-gui,14:Show, autosize xcenter y5, MidiMonitor
+gui,14:Show, % " autosize x" A_ScreenWidth - 470 " y " A_ScreenHeight - 340, MidiMonitor
 
 Return
 

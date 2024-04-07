@@ -71,6 +71,7 @@ ReadIni() ; also set up the tray Menu
 		Menu, Tray, Add, ;-------------------------------
 		Menu, Tray, Add,% "Reload " apptitle "`tShift+Alt+Esc", Restart
 		Menu, Tray, Add,% "Exit " apptitle, GuiClose
+		Menu, Tray, Default, % "Open MIDI Monitor"
 		Menu, Tray, NoStandard
 	}
 ;*************************************************
