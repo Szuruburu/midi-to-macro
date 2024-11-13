@@ -23,3 +23,15 @@ ConvertCCValueToScale(value, minimum_value, maximum_value) {
 	}
 	return (value - minimum_value) / (maximum_value - minimum_value)
 }
+
+ImageClick(path,off_x:=0,off_y:=0) {
+	CoordMode, Mouse, Screen
+	MouseGetPos, m_x, m_y
+	CoordMode, Mouse, Window
+	BlockInput, Mousemove
+	ImageSearch, i_x, i_y, 0, 0, A_ScreenWidth, A_ScreenHeight, %path%
+	Click, % i_x + off_x ", " i_y + off_y
+	CoordMode, Mouse, Screen
+	MouseMove, m_x, m_y
+	BlockInput, MousemoveOff
+}

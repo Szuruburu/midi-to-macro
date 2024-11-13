@@ -19,11 +19,17 @@ Sections with ++++++++++++++++++++ Edit between these marks. You won't break it,
 #NoEnv
 #UseHook
 #MaxThreadsBuffer, On
-#MaxHotkeysPerInterval, 500 ; Prevents hotkey limit reached warning
+#MaxHotkeysPerInterval, 500
 #MaxThreadsPerHotkey, 4
-SendMode Input              ; Recommended for new scripts due to its superior speed and reliability.
-SetWorkingDir %A_ScriptDir% ; Ensures a consistent starting directory.
+SetTitleMatchMode 2
+SendMode Input
+SetControlDelay -1
+DetectHiddenWindows On
+SetMouseDelay -1
+SetWinDelay -1
+SetWorkingDir %A_ScriptDir%
 
+global imgdir := % A_ScriptDir "\img\"
 #Include %A_ScriptDir%\lib\CommonFunctions.ahk 
 
 if A_OSVersion in WIN_NT4,WIN_95,WIN_98,WIN_ME  ; if not xp or 2000 quit

@@ -13,9 +13,55 @@ ProcessNote(device, channel, note, velocity, isNoteOn) {
 }
 
 ProcessCC(device, channel, cc, value) {
-	if (cc = 20 and value != 127) {
+	#IfWinActive
+	if (cc = 60 and value != 127) {
 		SendInput, ^z
 	}
+	
+	; #IfWinActive Omnisphere
+	; if (cc = 
+
+	if WinActive("Falcon") {
+		if (cc = 53) {
+			ImageClick(imgdir "falcon-next.bmp",3,15)
+		}
+		
+		if (cc = 52) {
+		ImageClick(imgdir "falcon-prev.bmp",4,18)
+		}	
+	}
+
+	
+	if WinActive("Alchemy") {
+		if (cc = 53) {
+			ImageClick(imgdir "alchemy-right.bmp")
+		}
+
+		if (cc = 52) {
+			ImageClick(imgdir "alchemy-left.bmp")
+		}
+	}
+	
+	if WinActive("Omnisphere") {
+		if (cc = 53) {
+			SendInput, {Down}
+		}
+		
+		if (cc = 52) {
+			SendInput, {Up}
+		}
+	}
+	
+	if WinActive("Absynth") {
+		if (cc = 53) {
+			Send, {Down}{Enter}
+		}
+		
+		if (cc = 52) {
+			Send, {Up}{Enter}
+		}
+	}
+	
 	; if (cc = 21 or cc = 29) {
 		; scaled_value := ConvertCCValueToScale(value, 0, 127)
 		; vol := scaled_value * 90
